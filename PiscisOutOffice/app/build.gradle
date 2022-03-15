@@ -1,8 +1,35 @@
 plugins {
     id 'com.android.application'
+    id "org.sonarqube" version "3.3"
+}
+
+apply plugin: "com.vanniktech.android.junit.jacoco"
+
+junitJacoco {
+    jacocoVersion = '0.8.7' // type String
+    ignoreProjects = [] // type String array
+    excludes // type String List
+    includeNoLocationClasses = false // type boolean
+    includeInstrumentationCoverageInMergedReport = false // type boolean
+}
+
+
+sonarqube {
+    properties {
+        property "sonar.projectKey", "adriigc10_PiscisOutOffice"
+        property "sonar.organization", "adriigc10"
+        property "sonar.host.url", "https://sonarcloud.io"
+    }
 }
 
 android {
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
+
     compileSdk 32
 
     defaultConfig {
@@ -22,8 +49,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
 }
 
