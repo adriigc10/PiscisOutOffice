@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Piscis OutOffice</string>
+    <string name="comerciales">Comerciales</string>
+    <string name="repartidores">Repartidores</string>
 </resources>
