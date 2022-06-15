@@ -7,13 +7,13 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class ConnectionFactory {
-    private static Connection connectionInstance = null;
+public class FactoriaDeConexiones {
+    private static Connection instanciaConexion = null;
 
-    public static Connection getLocalConnection() {
-        Log.d("DEBUG", "CONNECTING DATABASE...");
+    public static Connection obtenerConexionLocal() {
+        Log.d("DEBUG", "CONECTANDO A LA BASE DE DATOS...");
 
-        String url = "jdbc:jtds:sqlserver://192.168.0.126;databaseName=PiscisR";
+        String url = "jdbc:jtds:sqlserver://192.168.0.127;databaseName=PiscisR";
         String username = "sa";
         String password = "1234";
 
@@ -25,21 +25,21 @@ public class ConnectionFactory {
                     StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
                     StrictMode.setThreadPolicy(policy);
                     Class.forName("net.sourceforge.jtds.jdbc.Driver").newInstance();
-                    connectionInstance = DriverManager.getConnection(url, username, password);
-                    Log.d("DEBUG", "Database connected!");
+                    instanciaConexion = DriverManager.getConnection(url, username, password);
+                    Log.d("DEBUG", "CONEXION SATISFACTORIA");
                 } catch (SQLException | ClassNotFoundException | IllegalAccessException | InstantiationException e) {
-                    Log.d("DEBUG", "Cannot connect to the database!");
-                    throw new IllegalStateException("Cannot connect the database!", e);
+                    Log.d("DEBUG", "NO SE HA PODIDO CONECTAR A LA BASE DE DATOS");
+                    throw new IllegalStateException("NO SE HA PODIDO CONECTAR A LA BASE DE DATOS", e);
                 }
             }
         });
 
         thread.start();
-        return connectionInstance;
+        return instanciaConexion;
     }
 
-    public static Connection getRemoteConnection() {
-        Log.d("DEBUG", "CONNECTING DATABASE...");
+    public static Connection obtenerConexionRemota() {
+        Log.d("DEBUG", "CONECTANDO A LA BASE DE DATOS");
 
         String url = "jdbc:jtds:sqlserver://sql244.sql.dinaserver.com:1433;databaseName=PiscisR";
         String username = "saR";
@@ -53,16 +53,18 @@ public class ConnectionFactory {
                     StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
                     StrictMode.setThreadPolicy(policy);
                     Class.forName("net.sourceforge.jtds.jdbc.Driver").newInstance();
-                    connectionInstance = DriverManager.getConnection(url, username, password);
-                    Log.d("DEBUG", "CONECTION SUCSESSFUL!");
+                    instanciaConexion = DriverManager.getConnection(url, username, password);
+                    Log.d("DEBUG", "CONEXION SATISFACTORIA");
                 } catch (SQLException | ClassNotFoundException | IllegalAccessException | InstantiationException e) {
-                    Log.d("DEBUG", "CANNOT CONNECT TO THE DATABASE!");
-                    throw new IllegalStateException("CANNOT CONNECT TO THE DATABASE!", e);
+                    Log.d("DEBUG", "NO SE HA PODIDO CONECTAR A LA BASE DE DATOS");
+                    throw new IllegalStateException("NO SE HA PODIDO CONECTAR A LA BASE DE DATOS", e);
                 }
             }
         });
 
         thread.start();
-        return connectionInstance;
+        return instanciaConexion;
     }
+
+    public static Connection obtenerConexion(){ return instanciaConexion; }
 }

@@ -2,4 +2,5 @@
     <string name="app_name">Piscis OutOffice</string>
     <string name="comerciales">Comerciales</string>
     <string name="repartidores">Repartidores</string>
+    <string name="iniciar_sesion">Iniciar sesión</string>
 </resources>

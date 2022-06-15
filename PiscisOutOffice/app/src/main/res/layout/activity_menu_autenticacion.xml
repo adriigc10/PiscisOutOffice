@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.MenuLoginActivity">
+    tools:context=".view.autenticacion.MenuAutenticacionActivity">
 
     <ImageView
         android:id="@+id/logo_imagen"
@@ -25,7 +25,7 @@
         android:layout_marginTop="40dp"
         android:background="@drawable/textview_border_red"
         android:gravity="center"
-        android:text="Area Comerciales"
+        android:text="@string/iniciar_sesion"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="24sp"
         app:circularflow_defaultRadius="50dp"
@@ -35,7 +35,7 @@
         app:layout_constraintTop_toBottomOf="@+id/logo_imagen" />
 
     <EditText
-        android:id="@+id/et_usuario_comerciales"
+        android:id="@+id/et_usuario"
         android:layout_width="250dp"
         android:layout_height="50dp"
         android:layout_marginTop="64dp"
@@ -53,7 +53,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_area_comerciales" />
 
     <EditText
-        android:id="@+id/psw_comerciales"
+        android:id="@+id/et_password"
         android:layout_width="250dp"
         android:layout_height="50dp"
         android:layout_marginTop="48dp"
@@ -67,6 +67,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_usuario_comerciales" />
+        app:layout_constraintTop_toBottomOf="@+id/et_usuario" />
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="44dp"
+        android:text="Login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_password" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
