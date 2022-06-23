@@ -1,4 +1,4 @@
-package es.piscis.piscisoutoffice.presenter;
+package es.piscis.piscisoutoffice.presenter.autenticacion;
 
 import android.os.StrictMode;
 import android.view.View;
@@ -24,7 +24,7 @@ public class AutenticacionPresenter implements IContratoAutenticacion.Presenter 
 
         this.vista = vista;
         operacionesBBDD = new OperacionesBBDD();
-        FactoriaDeConexiones.obtenerConexionRemota();
+        FactoriaDeConexiones.obtenerConexionLocal();
     }
 
     @Override
@@ -34,7 +34,7 @@ public class AutenticacionPresenter implements IContratoAutenticacion.Presenter 
             rol = operacionesBBDD.conocerRol();
             if (rol.equals("comercial")){
                 vista.onComercialAutenticado();
-            } else if (rol.equals("reaprtidor")){
+            } else if (rol.equals("repartidor")){
                 vista.onRepartidorAutenticado();
             }
             else{

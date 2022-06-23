@@ -2,7 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="es.piscis.piscisoutoffice">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="false"
@@ -11,16 +13,30 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-
+        <activity
+            android:name=".view.factura.ListaFacturasActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.reserva.ListaReservasActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.detalleCliente.DetalleClienteActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.cliente.ListaClientesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.comercial.MenuPrincipalComercialActivity"
+            android:exported="false" />
         <activity
             android:name=".view.autenticacion.MenuAutenticacionActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>

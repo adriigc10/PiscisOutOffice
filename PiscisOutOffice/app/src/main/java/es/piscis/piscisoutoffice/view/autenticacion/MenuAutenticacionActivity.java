@@ -12,9 +12,10 @@ import android.widget.Toast;
 
 
 import es.piscis.piscisoutoffice.R;
-import es.piscis.piscisoutoffice.presenter.AutenticacionPresenter;
+import es.piscis.piscisoutoffice.presenter.autenticacion.AutenticacionPresenter;
+import es.piscis.piscisoutoffice.view.comercial.MenuPrincipalComercialActivity;
 
-public class MenuAutenticacionActivity extends AppCompatActivity implements IContratoAutenticacion.View, View.OnClickListener{
+public class MenuAutenticacionActivity extends AppCompatActivity implements IContratoAutenticacion.View, View.OnClickListener {
 
     // Presenter
     IContratoAutenticacion.Presenter presenter;
@@ -55,8 +56,8 @@ public class MenuAutenticacionActivity extends AppCompatActivity implements ICon
 
     @Override
     public void onComercialAutenticado() {
-//        Intent intent = new Intent(this, ComercialPrincipalActivity.class);
-//        startActivity(intent);
+       Intent intent = new Intent(this, MenuPrincipalComercialActivity.class);
+       startActivity(intent);
     }
 
     @Override

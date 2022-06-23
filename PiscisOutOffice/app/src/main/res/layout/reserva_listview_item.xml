@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:backgroundTint="#872121"
+    android:orientation="horizontal"
+    android:paddingHorizontal="20dp"
+    android:paddingVertical="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_nombreArticulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/nombre_articulo" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_unidadesReservadas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Unidades Reservadas:" />
+
+            <TextView
+                android:id="@+id/tv_unidadesArticulo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#B0D18A"
+                android:text="Unidades"
+                android:textAlignment="textStart"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_comentario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="cursive"
+            android:text="Comentario" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_fotoArticulo"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
+        android:layout_marginRight="10dp"
+        android:layout_weight="1"
+        app:srcCompat="@drawable/ic_launcher_background"
+        tools:ignore="ImageContrastCheck" />
+
+</LinearLayout>
+

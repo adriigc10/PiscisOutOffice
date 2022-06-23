@@ -10,14 +10,16 @@ import java.sql.SQLException;
 public class FactoriaDeConexiones {
     private static Connection instanciaConexion = null;
 
-    public static Connection obtenerConexionLocal() {
-        Log.d("DEBUG", "CONECTANDO A LA BASE DE DATOS...");
+    public static void obtenerConexionLocal() {
+        Log.d("DEBUG",  "CONECTANDO A LA BASE DE DATOS...");
 
-        String url = "jdbc:jtds:sqlserver://192.168.0.127;databaseName=PiscisR";
+        String url = "jdbc:jtds:sqlserver://192.168.1.100;databaseName=PiscisR";
         String username = "sa";
         String password = "1234";
 
         Thread thread = new Thread(new Runnable() {
+
+            // TODO: COMPROBAR FALLO AL NO TENER INTERNET Y ABRIR APLICACION
 
             @Override
             public void run() {
@@ -35,10 +37,9 @@ public class FactoriaDeConexiones {
         });
 
         thread.start();
-        return instanciaConexion;
     }
 
-    public static Connection obtenerConexionRemota() {
+    public static void obtenerConexionRemota() {
         Log.d("DEBUG", "CONECTANDO A LA BASE DE DATOS");
 
         String url = "jdbc:jtds:sqlserver://sql244.sql.dinaserver.com:1433;databaseName=PiscisR";
@@ -63,7 +64,6 @@ public class FactoriaDeConexiones {
         });
 
         thread.start();
-        return instanciaConexion;
     }
 
     public static Connection obtenerConexion(){ return instanciaConexion; }

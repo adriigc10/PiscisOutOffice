@@ -3,4 +3,9 @@
     <string name="comerciales">Comerciales</string>
     <string name="repartidores">Repartidores</string>
     <string name="iniciar_sesion">Iniciar sesión</string>
+    <string name="clientes">Clientes</string>
+    <string name="nombre_cliente">Nombre Cliente</string>
+    <string name="buscar">Buscar</string>
+    <string name="articulos">Articulos</string>
+    <string name="nombre_articulo">Nombre Articulo</string>
 </resources>
