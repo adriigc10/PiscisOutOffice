@@ -1,6 +1,7 @@
 package es.piscis.piscisoutoffice.view.comercial;
 
-import es.piscis.piscisoutoffice.model.Room.Entidades.Articulo;
+import java.util.List;
+
 import es.piscis.piscisoutoffice.model.Room.Entidades.Cliente;
 
 public interface IContratoComercial {
@@ -9,7 +10,9 @@ public interface IContratoComercial {
         void onAgendaClientesClicked();
         void onAgendaVisitasClicked();
         void onBuscarArticuloClicked();
-        void onBuscarClicked(String busqueda, boolean buscarCliente);
+
+        // Errores de conexion
+        void onActualizarClicked();
     }
 
     public interface View{
@@ -17,7 +20,12 @@ public interface IContratoComercial {
         void onAgendaClientesVacia();
         void onMostrarAgendaVisitas();
         void onAgendaVisitasVacia();
-        void onArticuloBuscado();
-        void onArticuloError();
+        void onMostrarArticulos();
+        void onArticulosVacio();
+
+        // Errores de conexion
+        void onConexionInternetError();
+        void onConexionBBDDError();
+        boolean hasInternetConnection();
     }
 }

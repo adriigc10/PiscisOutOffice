@@ -6,9 +6,10 @@ import androidx.room.PrimaryKey;
 
 @Entity
 public class Cliente {
+
     // ATRIBUTOS
-    @PrimaryKey(autoGenerate = false)
-    @NonNull
+
+    @PrimaryKey
     private Integer codigoCliente;
     private String nombre;
     private String nombreComercial;
@@ -16,10 +17,9 @@ public class Cliente {
     private String dirección;
     private String localidad;
 
+    // CONSTRUCTORES
 
-    public Cliente() {
-
-    }
+    public Cliente() { }
 
     public Cliente(Integer id, String nombre, String nombreComercial, String telefono, String dirección, String localidad) {
         this.codigoCliente = id;
@@ -29,6 +29,8 @@ public class Cliente {
         this.dirección = dirección;
         this.localidad = localidad;
     }
+
+    // GETTERS
 
     public Integer getCodigoCliente() {
         return codigoCliente;
@@ -56,7 +58,6 @@ public class Cliente {
 
     // SETTERS
 
-
     public void setCodigoCliente(@NonNull Integer codigoCliente) {
         this.codigoCliente = codigoCliente;
     }
@@ -80,6 +81,8 @@ public class Cliente {
     public void setLocalidad(String localidad) {
         this.localidad = localidad;
     }
+
+    // METODOS AUXILIARES
 
     @Override
     public String toString() {

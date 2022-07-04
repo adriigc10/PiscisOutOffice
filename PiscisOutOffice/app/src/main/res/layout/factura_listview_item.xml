@@ -16,34 +16,14 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/tv_campoFechaFactura"
+                android:id="@+id/tv_campoRefPresupuesto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Fecha documento" />
+                android:text="Fecha documento:" />
 
             <TextView
-                android:id="@+id/tv_fechaFactura"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="TextView" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tv_campoTotalFactura"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Total Factura" />
-
-            <TextView
-                android:id="@+id/tv_totalFactura"
+                android:id="@+id/tv_referenciaPresupuesto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -56,14 +36,34 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/tv_campoNumeroFra"
+                android:id="@+id/tv_campoFechaPresupuesto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="NumeroFra" />
+                android:text="Total Factura:" />
 
             <TextView
-                android:id="@+id/tv_numeroFra"
+                android:id="@+id/tv_fechaPresupuesto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="TextView" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_campoTotalPresupuesto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="NumeroFra:" />
+
+            <TextView
+                android:id="@+id/tv_totalPresupuesto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

@@ -20,9 +20,8 @@ public interface IContratoCliente {
     public interface View {
         /**
          * Metodo que se encarga de abrir una nueva actividad personalizada para el cliente seleccionado
-         * @param cliente
          */
-        void abrirDetalleCliente(Cliente cliente);
+        void abrirDetalleCliente();
 
         /**
          * Metodo que se encarga de generar la nueva actividad con la lista de los clientes de un comercial

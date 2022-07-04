@@ -5,6 +5,7 @@ import androidx.room.PrimaryKey;
 
 @Entity
 public class Reserva {
+
     // ATRIBUTOS
 
     @PrimaryKey(autoGenerate = true)
@@ -17,6 +18,8 @@ public class Reserva {
     private String UrlDescarga;
 
     // CONSTRUCTOR
+
+    public Reserva() { }
 
     public Reserva(Integer codigoArticulo, String codigoBa, String nombreArticulo,
                    Integer unidades, String comentario) {

@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Window;
 import android.view.WindowManager;
@@ -16,14 +15,19 @@ import android.widget.Toast;
 import java.util.List;
 
 import es.piscis.piscisoutoffice.R;
-import es.piscis.piscisoutoffice.model.Datos.DatosComercial;
+import es.piscis.piscisoutoffice.model.Datos.DatosTrabajador;
 
+import es.piscis.piscisoutoffice.model.Room.BBDD.BaseDeDatos;
+import es.piscis.piscisoutoffice.model.Room.Dao.IClienteDAO;
 import es.piscis.piscisoutoffice.model.Room.Entidades.Reserva;
 import es.piscis.piscisoutoffice.presenter.reserva.ReservaPresenter;
 
 public class ListaReservasActivity extends AppCompatActivity implements IContratoReserva.View {
 
     private IContratoReserva.Presenter presenter;
+
+    BaseDeDatos bd;
+    IClienteDAO clientesDAO;
 
     ListView listView;
     ReservaArrayAdapter adapter;
@@ -35,7 +39,10 @@ public class ListaReservasActivity extends AppCompatActivity implements IContrat
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_reservas);
 
-        presenter = new ReservaPresenter(this);
+        bd = BaseDeDatos.getInstancia(this.getApplicationContext());
+        clientesDAO = bd.clienteDAO();
+
+        presenter = new ReservaPresenter(this, bd);
 
     }
 
@@ -46,7 +53,8 @@ public class ListaReservasActivity extends AppCompatActivity implements IContrat
         TextView clientePulsado = findViewById(R.id.tv_nombreClientePulsado2);
 
         campoClienteSeleccionado.setText("Nombre Cliente: ");
-        clientePulsado.setText(DatosComercial.getClienteSeleccionado().getNombre());
+        // TODO
+//        clientePulsado.setText(DatosTrabajador.getCodigoClienteSeleccionado().getNombre());
 
         adapter = new ReservaArrayAdapter(ListaReservasActivity.this, 0, reservas);
         listView = findViewById(R.id.reservasListView);

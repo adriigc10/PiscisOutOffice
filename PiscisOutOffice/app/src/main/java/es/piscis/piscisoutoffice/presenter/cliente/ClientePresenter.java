@@ -8,7 +8,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import es.piscis.piscisoutoffice.model.Datos.DatosComercial;
+import es.piscis.piscisoutoffice.model.Datos.DatosTrabajador;
+import es.piscis.piscisoutoffice.model.Room.BBDD.BaseDeDatos;
+import es.piscis.piscisoutoffice.model.Room.Dao.IClienteDAO;
 import es.piscis.piscisoutoffice.model.Room.Entidades.Cliente;
 
 import es.piscis.piscisoutoffice.model.OperacionesBBDD.IOperacionesBBDD;
@@ -18,31 +20,41 @@ import es.piscis.piscisoutoffice.view.cliente.IContratoCliente;
 public class ClientePresenter implements IContratoCliente.Presenter {
 
     private final IContratoCliente.View vista;
-    private IOperacionesBBDD operacionesBBDD;
+
+    // ROOM
+
+    IClienteDAO clienteDAO;
 
     List<Cliente> clientes;
     List<Cliente> clientesFiltrados;
 
-    public ClientePresenter(IContratoCliente.View vista) {
+    public ClientePresenter(IContratoCliente.View vista, BaseDeDatos db) {
+        // Necesario para poder establecer conexion con la base de datos
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
+        // Room
+        clienteDAO = db.clienteDAO();
+
         this.vista = vista;
-        this.clientes = DatosComercial.getClientes();
-        operacionesBBDD = new OperacionesBBDD();
+        this.clientes = clienteDAO.getAllClientes();
 
         cargarDatos();
     }
 
+    private void cargarDatos() {
+        vista.onClientesCargados(clienteDAO.getAllClientes());
+        vista.onCargaSatisfactoria(clienteDAO.getAllClientes().size());
+    }
 
     @Override
     public void onClientePulsado(int clienteIndex) {
-        Cliente clientePulsado = DatosComercial.getClientes().get(clienteIndex);
-        DatosComercial.setClienteSeleccionado(clientePulsado);
-        vista.abrirDetalleCliente(clientePulsado);
+        // Obtenemos a los clientes de la base de datos local
+        Cliente clientePulsado = clienteDAO.getAllClientes().get(clienteIndex);
+        DatosTrabajador.setCodigoClienteSeleccionado(clientePulsado.getCodigoCliente());
+
+        vista.abrirDetalleCliente();
     }
-
-
 
     @Override
     public void onFiltroBusquedaClientesTiempoReal(String busqueda) {
@@ -71,7 +83,9 @@ public class ClientePresenter implements IContratoCliente.Presenter {
         }
 
         // Establecemos los clientes como los filtrados para la actualizacion del indice
-        DatosComercial.setClientes(clientesFiltrados);
+
+        clienteDAO.eliminarListaClientes(clientes);
+        clienteDAO.insertarListaClientes(clientesFiltrados);
 
         vista.onClientesCargados(clientesFiltrados);
     }
@@ -80,12 +94,5 @@ public class ClientePresenter implements IContratoCliente.Presenter {
         cargarDatos();
     }
 
-    private void cargarDatos() {
-        if (!operacionesBBDD.comprobarConexion()){
-            vista.onCargaError();
-        } else {
-            vista.onClientesCargados(DatosComercial.getClientes());
-            vista.onCargaSatisfactoria(DatosComercial.getClientes().size());
-        }
-    }
+
 }

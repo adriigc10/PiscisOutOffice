@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:paddingHorizontal="20dp"
+    android:paddingVertical="10dp"
+    tools:context=".view.visita.ListaVisitasActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/tv_diaAccion_detalleVisita"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/tv_nombreCliente_detalleVisita"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/tv_conceptoAccion_detalleVisita"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/tv_direccion_detalleVisita"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/tv_localidad_detalleVisita"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/tv_codigoPostal_detalleVisita"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/tv_telefono_detalleVisita"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/tv_comentario_detalleVista"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingVertical="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <Switch
+                    android:id="@+id/sw_meRecibio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/me_recibio"
+                    tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <Switch
+                    android:id="@+id/sw_produjoVenta"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/produjo_venta"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <Switch
+                    android:id="@+id/sw_activo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/finalizar_visita"
+                    tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

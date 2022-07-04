@@ -24,7 +24,9 @@ import android.widget.Toast;
 import java.util.List;
 
 import es.piscis.piscisoutoffice.R;
-import es.piscis.piscisoutoffice.model.Datos.DatosComercial;
+import es.piscis.piscisoutoffice.model.Datos.DatosTrabajador;
+import es.piscis.piscisoutoffice.model.Room.BBDD.BaseDeDatos;
+import es.piscis.piscisoutoffice.model.Room.Dao.IClienteDAO;
 import es.piscis.piscisoutoffice.model.Room.Entidades.Factura;
 import es.piscis.piscisoutoffice.presenter.factura.FacturaPresenter;
 
@@ -34,6 +36,9 @@ public class ListaFacturasActivity extends AppCompatActivity implements IContrat
 
     private IContratoFactura.Presenter presenter;
     private String url;
+
+    BaseDeDatos bd;
+    IClienteDAO clienteDAO;
 
     ListView listView;
     FacturaArrayAdapter adapter;
@@ -45,7 +50,10 @@ public class ListaFacturasActivity extends AppCompatActivity implements IContrat
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_facturas);
 
-        presenter = new FacturaPresenter(this);
+        bd = BaseDeDatos.getInstancia(this.getApplicationContext());
+        clienteDAO = bd.clienteDAO();
+
+        presenter = new FacturaPresenter(this, bd);
     }
 
     @Override
@@ -54,7 +62,7 @@ public class ListaFacturasActivity extends AppCompatActivity implements IContrat
         TextView clientePulsado = findViewById(R.id.tv_nombreClientePulsado3);
 
         campoClienteSeleccionado.setText("Nombre Cliente: ");
-        clientePulsado.setText(DatosComercial.getClienteSeleccionado().getNombre());
+        clientePulsado.setText(clienteDAO.getCliente(DatosTrabajador.getCodigoClienteSeleccionado()).getNombre());
 
         adapter = new FacturaArrayAdapter(ListaFacturasActivity.this, 0, facturas);
         listView = findViewById(R.id.facturasListView);
@@ -88,6 +96,7 @@ public class ListaFacturasActivity extends AppCompatActivity implements IContrat
     public void descargarFactura(String url) {
         this.url = url;
         Log.d("DEBUG", url);
+        // Comprbamos que tenemos permisos para guardar ficheros
         if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
                 PackageManager.PERMISSION_DENIED) {
             // Permiso denegado, hay que solicitarlo
@@ -102,15 +111,21 @@ public class ListaFacturasActivity extends AppCompatActivity implements IContrat
     }
 
     private void empezarDescarga(String url) {
-        DownloadManager.Request request = new DownloadManager.Request(Uri.parse("https://www.almacenespiscis.com/images/articulos/8435462165585.jpg"));
+        // Creamos una peticion y le pasamos las URI destino
+        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+        // Permitimos las descargas por wifi y datos móviles
         request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE | DownloadManager.Request.NETWORK_WIFI);
-        request.setTitle("Descarga");
-        request.setDescription("Descargando...");
-        request.allowScanningByMediaScanner();
+        // TODO: preguntar porque cambia esto
+        request.setTitle("factura_" + url.split("/")[4]); // Establecemos el titulo de la ventana
+        request.setDescription("Descargando..."); // Establecemos la descripcion de la ventana
+//        request.allowScanningByMediaScanner();
+        // El proceso de la descarga se podrá ver desde las notificacion
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "facturas");
-
+        // La descarga se guardará en la carpeta descargas
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "factura_" + url.split("/")[4]);
+                Log.d("DEBUG", "factura_" + url.split("/")[4]);
         DownloadManager manager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+        // Encolamos la descarga
         manager.enqueue(request);
     }
 
@@ -121,7 +136,7 @@ public class ListaFacturasActivity extends AppCompatActivity implements IContrat
             case CODIGO_PERMISO_DESCARGA:
                 if (grantResults.length > 0 && grantResults[0] ==
                     PackageManager.PERMISSION_GRANTED) {
-                    // Permiso garantizado desde el pop-up. descargamos el pdf
+                    // Permiso garantizado desde el pop-up. Descargamos el pdf
                     empezarDescarga(url);
                 } else {
                     // Permiso denegado desde Pop-up

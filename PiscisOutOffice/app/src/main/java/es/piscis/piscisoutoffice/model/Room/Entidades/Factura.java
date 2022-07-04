@@ -11,6 +11,8 @@ import java.util.Date;
 @Entity
 public class Factura {
 
+    // ATRIBUTOS
+
     @PrimaryKey(autoGenerate = true)
     private Integer id;
     private String fechaDocumento;
@@ -18,7 +20,9 @@ public class Factura {
     private Integer numeroFra;
     private String urlDescarga;
 
-    // CONSTRUCTOR
+    // CONSTRUCTORES
+
+    public Factura() { }
 
     public Factura(String fechaDocumento, Float totalFactura, Integer numeroFra, String urlDescarga) {
         this.fechaDocumento = fechaDocumento;

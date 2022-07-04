@@ -8,6 +8,7 @@ import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.Gravity;
 import android.view.Window;
 import android.view.WindowManager;
@@ -19,6 +20,7 @@ import java.util.List;
 
 import es.piscis.piscisoutoffice.R;
 
+import es.piscis.piscisoutoffice.model.Room.BBDD.BaseDeDatos;
 import es.piscis.piscisoutoffice.model.Room.Entidades.Cliente;
 import es.piscis.piscisoutoffice.presenter.cliente.ClientePresenter;
 import es.piscis.piscisoutoffice.view.detalleCliente.DetalleClienteActivity;
@@ -27,8 +29,7 @@ public class ListaClientesActivity extends AppCompatActivity implements IContrat
 
     private IContratoCliente.Presenter presenter;
 
-//    BaseDeDatos db;
-//    IClienteDAO dao;
+    BaseDeDatos db;
 
     SearchView searchView;
     ListView listView;
@@ -36,18 +37,19 @@ public class ListaClientesActivity extends AppCompatActivity implements IContrat
 
     private Toast msgToast;
 
-    @SuppressLint("WrongThread")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_clientes);
 
-        presenter = new ClientePresenter(this);
+        // Necesario para poder establecer una conexion
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
         // INSTANCIAMOS ROOM
-//        db = BaseDeDatos.getInstancia(this.getApplicationContext());
-//        db.clearAllTables();
-//        dao = db.clienteDAO();
+        db = BaseDeDatos.getInstancia(this.getApplicationContext());
+
+        presenter = new ClientePresenter(this, db);
     }
 
     @Override
@@ -97,10 +99,7 @@ public class ListaClientesActivity extends AppCompatActivity implements IContrat
     }
 
     @Override
-    public void abrirDetalleCliente(Cliente clientePulsado) {
-        // Insertamos el cliente en la base de datos ROOM
-//        dao.insert(clientePulsado);
-
+    public void abrirDetalleCliente() {
         Intent intent = new Intent(this, DetalleClienteActivity.class);
         startActivity(intent);
     }

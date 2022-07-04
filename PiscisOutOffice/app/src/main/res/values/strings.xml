@@ -8,4 +8,7 @@
     <string name="buscar">Buscar</string>
     <string name="articulos">Articulos</string>
     <string name="nombre_articulo">Nombre Articulo</string>
+    <string name="me_recibio">¿Me recibio?</string>
+    <string name="produjo_venta">¿Produjo venta?</string>
+    <string name="finalizar_visita">Finalizar visita</string>
 </resources>

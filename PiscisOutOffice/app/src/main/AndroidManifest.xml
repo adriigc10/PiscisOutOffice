@@ -14,6 +14,24 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
+            android:name=".view.presupuesto.ListaPresupuestosActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.crearVisita.CrearVisitaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.detalleVisita.DetalleVisitaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.detalleArticulo.DetalleArticuloActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.visita.ListaVisitasActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.articulo.ListaArticulosActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.factura.ListaFacturasActivity"
             android:exported="false" />
         <activity

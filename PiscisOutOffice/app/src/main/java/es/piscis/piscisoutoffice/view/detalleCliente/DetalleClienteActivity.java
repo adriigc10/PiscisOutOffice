@@ -1,20 +1,32 @@
 package es.piscis.piscisoutoffice.view.detalleCliente;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import es.piscis.piscisoutoffice.R;
-import es.piscis.piscisoutoffice.model.Datos.DatosComercial;
 
+import es.piscis.piscisoutoffice.model.Datos.DatosTrabajador;
+import es.piscis.piscisoutoffice.model.Room.BBDD.BaseDeDatos;
+import es.piscis.piscisoutoffice.model.Room.Dao.IClienteDAO;
 import es.piscis.piscisoutoffice.presenter.detalleCliente.DetalleClientePresenter;
 import es.piscis.piscisoutoffice.view.factura.ListaFacturasActivity;
+import es.piscis.piscisoutoffice.view.presupuesto.ListaPresupuestosActivity;
 import es.piscis.piscisoutoffice.view.reserva.ListaReservasActivity;
 
 public class DetalleClienteActivity extends AppCompatActivity implements IContratoDetalleCliente.View, View.OnClickListener {
@@ -24,8 +36,8 @@ public class DetalleClienteActivity extends AppCompatActivity implements IContra
 
     // ROOM
 
-//    BaseDeDatos db;
-//    IClienteDAO dao;
+    BaseDeDatos bd;
+    IClienteDAO clienteDAO;
 
     // ATRIBUTOS
     private TextView tv_campoClienteSeleccionado;
@@ -41,11 +53,15 @@ public class DetalleClienteActivity extends AppCompatActivity implements IContra
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalle_cliente);
 
-        presenter = new DetalleClientePresenter(this);
+        // Necesario para poder establecer una conexion
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
         // ROOM
-//        db = BaseDeDatos.getInstancia(this.getApplicationContext());
-//        dao = db.clienteDAO();
+        bd = BaseDeDatos.getInstancia(this.getApplicationContext());
+        clienteDAO = bd.clienteDAO();
+
+        presenter = new DetalleClientePresenter(this, bd);
 
         tv_campoClienteSeleccionado = findViewById(R.id.tv_campoClienteSeleccionado);
         tv_nombreClientePulsado = findViewById(R.id.tv_nombreClientePulsado);
@@ -54,7 +70,7 @@ public class DetalleClienteActivity extends AppCompatActivity implements IContra
         btn_reservas = findViewById(R.id.btn_reservas);
 
         tv_campoClienteSeleccionado.setText("Cliente seleccionado");
-        tv_nombreClientePulsado.setText(DatosComercial.getClienteSeleccionado().getNombre());
+        tv_nombreClientePulsado.setText(clienteDAO.getCliente(DatosTrabajador.getCodigoClienteSeleccionado()).getNombre());
         btn_facturas.setOnClickListener(this);
         btn_presupuestos.setOnClickListener(this);
         btn_reservas.setOnClickListener(this);
@@ -85,17 +101,20 @@ public class DetalleClienteActivity extends AppCompatActivity implements IContra
 
     @Override
     public void onFacturasClienteVacias() {
-
+        msgToast = Toast.makeText(this, "Este cliente no posee facturas", Toast.LENGTH_SHORT);
+        msgToast.show();
     }
 
     @Override
     public void onMostrarPresupuestosCliente() {
-
+        Intent intent = new Intent(this, ListaPresupuestosActivity.class);
+        startActivity(intent);
     }
 
     @Override
     public void onPresupuestosClienteVacios() {
-
+        msgToast = Toast.makeText(this, "Este cliente  no posee presupuestos", Toast.LENGTH_SHORT);
+        msgToast.show();
     }
 
     @Override
@@ -106,7 +125,45 @@ public class DetalleClienteActivity extends AppCompatActivity implements IContra
 
     @Override
     public void onReservasClienteVacias() {
+        msgToast = Toast.makeText(this, "Este cliente tiene ninguna reserva pendiente", Toast.LENGTH_SHORT);
+        msgToast.show();
+    }
 
+    public void onConexionInternetError() {
+        AlertDialog alert = new AlertDialog.Builder(this).create();
+        alert.setTitle("Error de conexión a Internet");
+        alert.setMessage("Compruebe que está conectado a una red WI-FI o red móvil y pulse 'ACTUALIZAR'");
+        alert.setButton(DialogInterface.BUTTON_POSITIVE,"Actualizar", (dialog, which) ->
+                presenter.onActualizarClicked()
+        );
+//        alert.setButton(DialogInterface.BUTTON_NEGATIVE, "Cerrar", (dialogInterface, i) -> alert.dismiss());
+        alert.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        WindowManager.LayoutParams wmlp = alert.getWindow().getAttributes();
+
+        wmlp.gravity = Gravity.CENTER;
+        alert.show();
+    }
+
+    public void onConexionBBDDError() {
+        AlertDialog alert = new AlertDialog.Builder(this).create();
+        alert.setTitle("Error de conexión con la Base de Datos");
+        alert.setMessage("En este momento no se puede establecer conexion con la base de datos." +
+                " Intentelo mas tarde");
+        alert.setButton(DialogInterface.BUTTON_POSITIVE,"Actualizar", (dialog, which) ->
+                presenter.onActualizarClicked()
+        );
+        alert.setButton(DialogInterface.BUTTON_NEGATIVE, "Cerrar", (dialogInterface, i) -> finish());
+        alert.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        WindowManager.LayoutParams wmlp = alert.getWindow().getAttributes();
+
+        wmlp.gravity = Gravity.CENTER;
+        alert.show();
+    }
+
+    public boolean hasInternetConnection() {
+        ConnectivityManager connectivityManager =  (ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        Log.d("DEBUG", "RED ACTIVA " + connectivityManager.getActiveNetwork());
+        return connectivityManager.getActiveNetwork() != null;
     }
 
     @SuppressLint("WrongThread")

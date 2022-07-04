@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:paddingHorizontal="20dp"
+    android:paddingVertical="10dp"
+    tools:context=".view.visita.ListaVisitasActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ListView
+            android:id="@+id/visitasListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+        </ListView>
+
+        <Button
+            android:id="@+id/btn_crearVisita"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#C1E4E7"
+            android:text="Crear visita" />
+    </LinearLayout>
+
+</LinearLayout>
